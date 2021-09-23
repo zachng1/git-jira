@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+MessageFile=$1
+Ticket=$(git branch --show-current | grep -oe '[A-Z]\+-[0-9]\+')
+
+if [[ ! $Ticket ]]; then
+    echo "Ensure your branch name includes the jira ticket in format [A-Z]-[0-9]"
+    exit 1
+fi
+
+messageContents=$(<$MessageFile)
+echo -n "$Ticket " > $MessageFile
+echo -n "$messageContents" >> $MessageFile
